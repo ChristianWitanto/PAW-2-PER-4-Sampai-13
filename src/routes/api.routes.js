@@ -7,6 +7,7 @@ import UploadController from '../controllers/upload.controller.js'
 import UserController from '../controllers/user.controller.js'
 import WelcomeController from '../controllers/welcome.controller.js'
 import LogMiddleware from '../middleware/log.middleware.js'
+import { authenticateJwt } from '../middleware/auth.js'
 
 const router = express.Router()
 
@@ -15,6 +16,7 @@ router.post('/users', UserController.store)
 router.post('/upload', upload.single('file'), UploadController.store)
 
 router.use(LogMiddleware)
+router.use(authenticateJwt) // Apply JWT authentication middleware to all routes below
 
 router.get('/fakultas',FakultasController.index)
 router.get("/fakultas/:id",FakultasController.show)

@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod';
 
 export const StoreProdiSchema = z.object({
   kode: z.string().trim().min(2, "Kode Prodi Minimal 2 Karakter"),
