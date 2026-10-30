@@ -8,20 +8,16 @@ import { JWT_EXPIRES_IN, JWT_SECRET } from '../config/env.js'
  * @param {object} [options] - Additional JWT options
  * @returns {Promise<string>} Signed JWT token
  */
-const generateToken = (payload, options = {}) => {
-  return new Promise((resolve, reject) => {
-    jwt.sign(
-      payload,
-      JWT_SECRET,
-      {
-        expiresIn: JWT_EXPIRES_IN,
-        ...options,
-      },
-      (err, token) => {
-        if (err) return reject(err)
-        resolve(token)
-      },
-    )
+
+const generateToken = (payload) => {
+  return jwt.sign(payload, JWT_SECRET, {
+    algorithm: 'HS256',
+    expiresIn: JWT_EXPIRES_IN,
+  })
+}
+const verifyToken = (token) => {
+  return jwt.verify(token, JWT_SECRET, {
+    algorithms: ['HS256'],
   })
 }
 
@@ -31,22 +27,14 @@ const generateToken = (payload, options = {}) => {
  * @param {object} [options] - Additional JWT verify options
  * @returns {Promise<object>} Decoded payload
  */
-const verifyToken = (token, options = {}) => {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, JWT_SECRET, options, (err, decoded) => {
-      if (err) return reject(err)
-      resolve(decoded)
-    })
-  })
-}
 
 class JwtHelper {
-  static async sign(payload, options = {}) {
-    return generateToken(payload, options)
+  static async sign(payload) {
+    return generateToken(payload)
   }
 
-  static async verify(token, options = {}) {
-    return verifyToken(token, options)
+  static async verify(token) {
+    return verifyToken(token)
   }
 }
 

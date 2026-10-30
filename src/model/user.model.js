@@ -1,4 +1,4 @@
-const {default:moongose} = require("mongoose");
+import moongose from "mongoose";
 
 const schema = moongose.Schema({
     name : {

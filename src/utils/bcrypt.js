@@ -21,8 +21,8 @@ const comparePassword = async (password, hash) => {
 }
 
 class PasswordHelper {
-  static async hash(password, saltRounds = 10) {
-    return await bcrypt.hash(password, saltRounds)
+  static async hash(password) {
+    return await bcrypt.hash(password,10)
   }
 
   static async compare(password, hash) {
@@ -30,4 +30,4 @@ class PasswordHelper {
   }
 }
 
-export { hashPassword, comparePassword, PasswordHelper }
+export { PasswordHelper }
